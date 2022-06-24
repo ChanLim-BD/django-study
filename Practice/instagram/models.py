@@ -12,6 +12,9 @@ class Post(models.Model):
         # return f"Custom Post object ({self.id})"
         return self.message
 
+    class Meta:
+        ordering = ['-id']
+
     def message_length(self):
         return len(self.message)
     message_length.short_description = "메세지 글자 수"
