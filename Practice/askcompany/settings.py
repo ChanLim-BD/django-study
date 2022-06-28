@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     # locals apps
+    'blog1',
     'instagram',
     'accounts',
 ]
