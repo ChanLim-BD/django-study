@@ -12,7 +12,7 @@ from .models import Post
 #     # instagram/templates/instagram/post_list.html
 #     return render(request, 'instagram/post_list.html', {
 #         'post_list' : qs,
-#         'q': q,
+#         'q': q, 
 #     })
 
 # def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
