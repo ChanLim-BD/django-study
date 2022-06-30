@@ -1,3 +1,5 @@
+{% load bootstrap4 %}
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,6 +19,9 @@
             {% for post in post_list %}
                 <tr>
                     <td>
+                        {{ post.pk }}
+                    </td>
+                    <td>
                         {% if post.photo%}
                             <img src="{{ post.photo.url }}" style="width: 100px;" />
                         {% else %}
@@ -24,11 +29,17 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ post.message }}
+                        <!-- <a href="{% url 'instagram:post_detail' post.pk %}"> -->
+                        <a href="{{ post.get_absolute_url }}">
+                            {{ post.message }}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% if is_paginated %}
+        {% bootstrap_pagination page_obj size="large" justify_content="center" %}
+    {% endif %}
 </body>
 </html>

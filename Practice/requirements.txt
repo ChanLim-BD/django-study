@@ -2,3 +2,4 @@ django~=3.0.0
 pillow
 django_extensions
 django-debug-toolbar
+django-bootstrap4
