@@ -1,18 +1,22 @@
+{% extends "instagram/layout.html" %}
 {% load bootstrap4 %}
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="utf-8" />
-    <title>Instagram / Post List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-</head>
-<body>
+{% block title %}
+Instagram / Post List
+{% endblock title %}
+
+{% block content %}
+    <script>
+    </script>
 
     <form action="" method="get">
         <input type="text" name="q" value="{{ q }}"/>
         <input type="submit" value="검색"/>
     </form>
+
+    <a href="{% url 'instagram:post_new' %}" class="btn btn-primary btn-block mt-3 mb-3">
+        새 포스팅
+    </a>
 
     <table class="table table-bordered table-hover">
         <tbody>
@@ -38,8 +42,7 @@
             {% endfor %}
         </tbody>
     </table>
-    {% if is_paginated %}
-        {% bootstrap_pagination page_obj size="large" justify_content="center" %}
-    {% endif %}
-</body>
-</html>
+{% if is_paginated %}
+    {% bootstrap_pagination page_obj size="large" justify_content="center" %}
+{% endif %}
+{% endblock content %}
