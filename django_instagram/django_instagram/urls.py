@@ -2,10 +2,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', TemplateView.as_view(template_name='root.html'), name='root') # re_path는 모든 주소에 맵핑된다. (정규표현식이라서)
 ]
 
 if settings.DEBUG:
