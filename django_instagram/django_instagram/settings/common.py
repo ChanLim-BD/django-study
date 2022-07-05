@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from os.path import abspath, dirname
+from pickle import TRUE
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
@@ -28,6 +29,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ADMINS = [
+    ('Chan Lim', 'chan9708@kakao.com'),
+]
+
 
 # Application definition
 
@@ -42,6 +47,7 @@ INSTALLED_APPS = [
     # Third Apps
     'debug_toolbar',
     'bootstrap4',
+    'django_pydenticon',
     # Local Apps
     'accounts',
 ]
@@ -139,3 +145,14 @@ MEDIA_URL = '/media/'
 MEDAI_ROOT = os.path.join(BASE_DIR, 'media')
 
 INTERNAL_IPS = ['127.0.0.1']
+
+
+# Email with Send Grid
+# SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = TRUE
+
+WELCOME_EMAIL_SENDER = 'chan9708@kakao.com'

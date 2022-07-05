@@ -5,12 +5,14 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from django_pydenticon.views import image as pydenticon_image
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('', login_required(TemplateView.as_view(template_name='root.html')), name='root') # re_path는 모든 주소에 맵핑된다. (정규표현식이라서)
+    path('identicon/image/<path:data>/', pydenticon_image, name='pydenticon_image'),
+    path('', login_required(TemplateView.as_view(template_name='root.html')), name='root'), # re_path는 모든 주소에 맵핑된다. (정규표현식이라서)
 ]
 
 if settings.DEBUG:
