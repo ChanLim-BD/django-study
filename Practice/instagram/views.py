@@ -139,7 +139,7 @@ class PostDetailView(DetailView):
         if not self.request.user.is_authenticated:
             qs = qs.filter(is_public=True)
         return qs
-
+ 
 post_detail = PostDetailView.as_view()
 
 # def archives_year(request, year):
