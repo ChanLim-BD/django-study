@@ -6,16 +6,21 @@
             {{ form_title }}
         </div>
     {% endif %}
-    <div class = "card-body">
-        <form action="" method="POST" enctype"multypart/form-data">
-            {% csrf_token %}
-            {% bootstrap_form form%}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">
-                    {{ submit_label|default:"Submit" }}
-                </button>
-            {% endbuttons %}
-        </form>
+    <div class="card-body">
+        {% if form %}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        {{ submit_label|default:"Submit" }}
+                    </button>
+                {% endbuttons %}
+            </form>
+        {% else %}
+            <div class="alert alert-danger">
+                form 객체를 지정해주세요.
+            </div>
+        {% endif %}
     </div>
-</div
-
+</div>
