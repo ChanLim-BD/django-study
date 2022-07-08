@@ -13,6 +13,7 @@ def index(request):
         .exclude(pk=request.user.pk)\
         .exclude(pk__in=request.user.following_set.all())[:3]
     return render(request, "instagram/index.html", {
+        "post_list": post_list,
         "suggested_user_list": suggested_user_list,
     })
 
