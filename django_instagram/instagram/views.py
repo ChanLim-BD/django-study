@@ -5,6 +5,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .forms import PostForm
 from .models import Post
 
+@login_required
+def index(request):
+    return render(request, "instagram/index.html", {
+
+    })
+
 
 @login_required
 def post_new(request):
