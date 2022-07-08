@@ -1,4 +1,5 @@
 from datetime import timedelta
+from xml.etree.ElementTree import Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -23,9 +24,13 @@ def index(request):
     suggested_user_list = get_user_model().objects.all()\
         .exclude(pk=request.user.pk)\
         .exclude(pk__in=request.user.following_set.all())[:3]
+
+    comment_form = CommentForm()
+
     return render(request, "instagram/index.html", {
         "post_list": post_list,
         "suggested_user_list": suggested_user_list,
+        "comment_form": comment_form,
     })
 
 
@@ -49,8 +54,10 @@ def post_new(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    comment_form = CommentForm()
     return render(request, "instagram/post_detail.html", {
         "post": post,
+        "comment_form": comment_form,
     })
 
 
@@ -83,6 +90,10 @@ def comment_new(request, post_pk):
             comment.post = post
             comment.author = request.user
             comment.save()
+            if request.is_ajax():
+                return render(request, "instagram/_comment.html", {
+                    "comment": comment,
+                })
             return redirect(comment.post)
     else:
         form = CommentForm()
