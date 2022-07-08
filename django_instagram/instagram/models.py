@@ -2,14 +2,15 @@ import re
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
     class Meta:
         abstract = True
 
+# user
+#  -> Post.objects.filter(author=user)
+#  -> user.post_set.all()
 
 class Post(BaseModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='my_post_set', on_delete=models.CASCADE)
@@ -35,6 +36,15 @@ class Post(BaseModel):
 
     def is_like_user(self, user):
         return self.like_user_set.filter(pk=user.pk).exists()
+        
+    class Meta:
+        ordering = ['-id']
+
+
+class Comment(BaseModel):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    message = models.TextField()
 
     class Meta:
         ordering = ['-id']
@@ -45,4 +55,3 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-
