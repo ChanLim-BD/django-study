@@ -1,5 +1,4 @@
 from datetime import timedelta
-from xml.etree.ElementTree import Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model

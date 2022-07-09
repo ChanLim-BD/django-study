@@ -119,7 +119,7 @@ post_delete = PostUpdateView.as_view()
 
 # post_list = login_required(ListView.as_view(model=Post, paginate_by=10))
 
-# @method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
     paginate_by = 10
