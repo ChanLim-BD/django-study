@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third
     'rest_framework',
+    # app
+    'instagram',
 ]
 
 MIDDLEWARE = [
