@@ -7,3 +7,4 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_public = models.BooleanField(default=False, db_index=True)
+    ip = models.GenericIPAddressField(null=True, editable=False)
