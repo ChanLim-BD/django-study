@@ -2,11 +2,13 @@ from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, action
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.renderers import TemplateHTMLRenderer
 from .serializers import PostSerializer
 from .models import Post
+from .permissions import IsAuthorOrReadonly
 
 
 # class PublicPostListAPIView(generics.ListAPIView):
@@ -31,7 +33,8 @@ from .models import Post
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # authentication_classes = []
+    # authentication_classes = []  # 인증이 됨을 보장받을 수 있습니다.
+    permission_classes = [IsAuthenticated, IsAuthorOrReadonly]
 
     def perform_create(self, serializer):
         # FIXME: 인증이 되어있다는 가정하에, author를 지정해보겠습니다.
