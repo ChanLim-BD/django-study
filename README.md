@@ -1,4 +1,4 @@
-> 출처 : [파이썬/장고 웹서비스 개발 완벽 가이드 with 리액트](https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%9E%A5%EA%B3%A0-%EC%9B%B9%EC%84%9C%EB%B9%84%EC%8A%A4/dashboard)
+> 출처 : [파이썬/장고 웹서비스 개발 완벽 가이드 with 리액트](https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%9E%A5%EA%B3%A0-%EC%9B%B9%EC%84%9C%EB%B9%84%EC%8A%A4/dashboard) 
 
 > 출처 : 본인 대학교 학과 서버프로그래밍 강의
 
