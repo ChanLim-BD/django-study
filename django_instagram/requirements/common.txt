@@ -1,7 +1,0 @@
-django~=3.0.0
-
-django-debug-toolbar
-django-bootstrap4
-pillow
-django-pydenticon
-easy-thumbnails
