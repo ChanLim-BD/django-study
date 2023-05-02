@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>{{ user.email }} 상세 정보</h1>
+<p>ID: {{ user.id }}</p>
+<p>이름: {{ user.name }}</p>
+<p>가입 일시: {{ user.date_joined }}</p>
+<p>상태: {{ user.get_status_display }}</p>
+{% if user.status == "W" %}
+<form action="{% url 'accounts:user_approve' user.id %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="가입 승인" class="btn btn-primary" />
+</form>
+<form action="{% url 'accounts:user_reject' user.id %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="가입 거절" class="btn btn-danger" />
+</form>
+{% endif %} {% if user.is_staff %}
+<form action="{% url 'accounts:user_demote' user.id %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="관리자 해제" class="btn btn-warning" />
+</form>
+{% else %}
+<form action="{% url 'accounts:standby_user_promote' user.id %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="관리자 등록" class="btn btn-success" />
+</form>
+{% endif %} {% endblock %}

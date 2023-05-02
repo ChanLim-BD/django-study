@@ -91,3 +91,78 @@ class SignOutView(APIView):
         logout(request)
         return Response({'MESSAGE': 'SUCCESS'}, status=status.HTTP_200_OK)
 
+
+
+
+# from django.contrib.auth import authenticate, login, logout
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.utils.decorators import method_decorator
+# from django.views import View
+# from django.contrib.auth.models import User
+# from django.views.decorators.debug import sensitive_post_parameters
+
+# import json
+
+
+
+
+# @method_decorator(csrf_exempt, name='dispatch')
+# class SignUpView(View):
+#     @sensitive_post_parameters()
+#     def post(self, request):
+#         data = json.loads(request.body.decode('utf-8'))
+
+#         try:
+#             # 요청 데이터에서 전화 및 암호 가져오기
+#             username = data['phone']
+#             password = data['password']
+
+#             # 유저명, 비밀번호가 입력되었는지 확인
+#             if username == '' or password == '':
+#                 return JsonResponse({'meta': {'code': 400, 'message': 'Enter Your User Phone or Password'}}, status=400)
+
+#             # 중복된 유저명 확인
+#             if User.objects.filter(username=username).exists():
+#                 return JsonResponse({'meta': {'code': 400, 'message': 'PHONE_DUPLICATED'}}, status=400)
+
+#             # 유저 생성
+#             User.objects.create_user(username=username, password=password)
+#             return JsonResponse({'meta': {'code': 201, 'message': 'SUCCESS'}}, status=201)
+
+#         except KeyError as ex:
+#             return JsonResponse({'meta': {'code': 400, 'message': 'KEY_ERROR_' + str.upper(ex.args[0])}}, status=400)
+
+
+# @method_decorator(csrf_exempt, name='dispatch')
+# class SignInView(View):
+#     @sensitive_post_parameters()
+#     def post(self, request):
+#         data = json.loads(request.body.decode('utf-8'))
+
+#         try:
+#             # 요청 데이터에서 전화 및 암호 가져오기
+#             username = data['phone']
+#             password = data['password']
+
+#             # 유저명, 비밀번호가 입력되었는지 확인
+#             if username == '' or password == '':
+#                 return JsonResponse({'meta': {'code': 400, 'message': 'Enter Your User Phone or Password'}}, status=400)
+
+#             # 계정이 있는지 확인하고 암호 확인
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return JsonResponse({'meta': {'code': 200, 'message': 'SUCCESS'}}, status=200)
+#             else:
+#                 return JsonResponse({'meta': {'code': 401, 'message': 'INVALID_USER'}}, status=401)
+
+#         except KeyError as ex:
+#             return JsonResponse({'meta': {'code': 400, 'message': 'KEY_ERROR_' + str.upper(ex.args[0])}}, status=400)
+
+
+# class SignOutView(View):
+#     def get(self, request):
+#         # 로그아웃 처리
+#         logout(request)
+#         return JsonResponse({'MESSAGE': 'SUCCESS'}, status=200)

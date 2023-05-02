@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block content %}
+<div class="wrapper" style="text-align: center">
+  <h1>회원가입</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label class="control-label" for="{{ form.email.id_for_label }}"
+        >이메일</label
+      >
+      {{ form.email }}
+
+      <button class="btn btn-secondary" type="button" id="check-email-btn">
+        중복확인
+      </button>
+    </div>
+    <div id="email-availability"></div>
+    <div class="form-group">
+      {{ form.password1.label_tag }} {{ form.password1 }}
+    </div>
+    <div class="form-group">
+      {{ form.password2.label_tag }} {{ form.password2 }}
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="{{ form.name.id_for_label }}"
+        >이름</label
+      >
+      {{ form.name }}
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="{{ form.phone_number.id_for_label }}"
+        >전화번호</label
+      >
+      {{ form.phone_number }}
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="신청하기" />
+  </form>
+</div>
+<script>
+  const emailInput = document.querySelector("#id_email");
+  const emailAvailability = document.querySelector("#email-availability");
+  const checkEmailBtn = document.querySelector("#check-email-btn");
+
+  checkEmailBtn.addEventListener("click", async () => {
+    if (!emailInput.value) {
+      emailAvailability.innerHTML =
+        "<p style='color: red'>이메일을 입력해주세요.</p>";
+      return;
+    }
+
+    const response = await fetch(
+      `/accounts/check-email/?email=${emailInput.value}`
+    );
+    const data = await response.json();
+
+    if (!data.valid) {
+      emailAvailability.innerHTML =
+        "<p style='color: red'>유효하지 않은 이메일입니다.</p>";
+    } else if (data.available) {
+      emailAvailability.innerHTML =
+        "<p style='color: green'>사용 가능한 이메일입니다.</p>";
+    } else {
+      emailAvailability.innerHTML =
+        "<p style='color: red'>이미 사용 중인 이메일입니다.</p>";
+    }
+  });
+</script>
+{% endblock %}

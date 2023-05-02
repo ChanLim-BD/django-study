@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %}
+<h1>가입 대기 회원 리스트</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>이메일</th>
+      <th>상태</th>
+      <th>이름</th>
+      <th>가입 일시</th>
+      <th>거절 일시</th>
+      <th>상세 정보</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.status }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.date_joined }}</td>
+      <td>{{ user.date_rejected }}</td>
+      <td>
+        <a href="{% url 'accounts:standby_user_detail' user.pk %}">상세 정보</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
