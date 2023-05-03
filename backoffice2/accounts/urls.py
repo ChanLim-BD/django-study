@@ -1,13 +1,12 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import home, CustomLoginView, SignUpView, check_email, UserListView, UserDetailView, StandbyUserListView, StandbyUserDetailView, update_permission, update_level, reject_user, approve_user, secession_user, update_user_info
+from .views import CustomLoginView, SignUpView, check_email, UserListView, UserDetailView, StandbyUserListView, StandbyUserDetailView, update_permission, update_level, reject_user, approve_user, secession_user, update_user_info
 
 app_name = 'accountapp' 
 
 urlpatterns = [
-    path('', home),
     path('signup/', SignUpView.as_view(), name='signup'),
-    path('signup/check-email/', check_email, name='check_email'),
+    path('check-email/', check_email, name='check_email'),
     path('login/', CustomLoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('users/', UserListView.as_view(), name='user_list'),

@@ -22,6 +22,12 @@
               <form id="logout-form" action="{% url 'accountapp:logout' %}" method="post" style="display: none">
                 {% csrf_token %}
               </form>
+              <div>
+                <form method="GET" action="{% url 'accountapp:user_list' %}">
+                  <input type="text" name="q" placeholder="이메일 검색">
+                  <button type="submit">검색</button>
+                </form>
+              </div>
             {% else %}
               <li><a href="{% url 'accountapp:signup' %}">가입</a></li>
               <li><a href="{% url 'accountapp:login' %}">로그인</a></li>

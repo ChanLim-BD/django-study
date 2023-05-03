@@ -11,12 +11,6 @@
     {% if user.permission_list == True %}
     {% if user.level == 'M' %}
     <h1>회원 리스트</h1>
-    <div>
-      <form method="GET" action="{% url 'accountapp:user_list' %}">
-        <input type="text" name="q" placeholder="이메일 검색">
-        <button type="submit">검색</button>
-      </form>
-    </div>
     <table>
       <thead>
         <tr>
@@ -49,12 +43,6 @@
     </table>
     {% else %}
     <h1>회원 리스트</h1>
-    <div>
-      <form method="GET" action="{% url 'accountapp:user_list' %}">
-        <input type="text" name="q" placeholder="이메일 검색">
-        <button type="submit">검색</button>
-      </form>
-    </div>
     <table>
       <thead>
         <tr>

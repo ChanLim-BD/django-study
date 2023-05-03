@@ -14,9 +14,6 @@ from django.contrib.auth import authenticate, login
 from .models import CustomUser
 from .forms import CustomUserCreationForm
 
-def home(request):
-    return render(request, "home.html")
-
 @require_GET
 def check_email(request):
     email = request.GET.get('email')
