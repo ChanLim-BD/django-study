@@ -39,10 +39,3 @@ class CustomUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-
-class LoginForm(AuthenticationForm):
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        fields = ['email', 'password']

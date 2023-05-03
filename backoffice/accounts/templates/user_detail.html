@@ -1,27 +1,61 @@
-{% extends 'base.html' %} {% block content %}
-
-<h1>{{ user.email }} 상세 정보</h1>
-<p>ID: {{ user.id }}</p>
-<p>이름: {{ user.name }}</p>
-<p>가입 일시: {{ user.date_joined }}</p>
-<p>상태: {{ user.get_status_display }}</p>
-{% if user.status == "W" %}
-<form action="{% url 'accounts:user_approve' user.id %}" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="가입 승인" class="btn btn-primary" />
-</form>
-<form action="{% url 'accounts:user_reject' user.id %}" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="가입 거절" class="btn btn-danger" />
-</form>
-{% endif %} {% if user.is_staff %}
-<form action="{% url 'accounts:user_demote' user.id %}" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="관리자 해제" class="btn btn-warning" />
-</form>
-{% else %}
-<form action="{% url 'accounts:standby_user_promote' user.id %}" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="관리자 등록" class="btn btn-success" />
-</form>
-{% endif %} {% endblock %}
+{% extends 'base.html' %} 
+{% block content %}
+{% if user.is_authenticated %}
+  <table>
+    <thead>
+      <tr>
+        <td>이메일</td>
+        <td>이름</td>
+        <td>전화번호</td>
+        <td></td>
+        <td>탈퇴일</td>
+        <td>등급</td>
+        {% if user.status == 'A' %}
+          <td>등급 조정</td>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <form method="POST" action="{% url 'accountapp:update_user_info' user.pk %}">
+          {% csrf_token %}
+          <td><input type="text" name="email" value="{{ user.email }}"></td>
+          <td><input type="text" name="name" value="{{ user.name }}"></td>
+          <td><input type="text" name="phone_number" value="{{ user.phone_number }}"></td>
+          <td><button type="submit">저장</button></td>
+        </form>
+        <td>{{ user.date_secession }}</td>
+        <td>{% if user.level == 'A' %} 관리자 {% else %} 일반 {% endif %}</td>
+        <td>
+          <form method="POST" action="{% url 'accountapp:update_level' user.pk %}">
+            {% csrf_token %}
+            <input type="radio" name="level" value="U" {% if user.level == 'U' %} checked {% endif %}>일반
+            <input type="radio" name="level" value="A" {% if user.level == 'A' %} checked {% endif %}>관리자
+            <button type="submit">저장</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <form method="POST" action="{% url 'accountapp:update_permission' user.pk %}">
+      {% csrf_token %}
+      <label><input type="checkbox" name="permission_approve" {% if user.permission_approve %} checked {% endif %}>가입 승인</label>
+      <label><input type="checkbox" name="permission_list" {% if user.permission_list %} checked {% endif %}>회원 조회</label>
+      <label><input type="checkbox" name="permission_edit" {% if user.permission_edit %} checked {% endif %}>회원 수정</label>
+      <label><input type="checkbox" name="permission_delete" {% if user.permission_delete %} checked {% endif %}>회원 탈퇴</label>
+      <button type="submit">저장</button>
+    </form>
+  </div>
+    <form method="POST" action="{% url 'accountapp:secession_user' user.pk %}">
+      {% csrf_token %}
+      <label>탈퇴 이유</label><br>
+      <textarea name="secession_reason" cols="30" rows="10"></textarea><br>
+      <button type="submit">탈퇴</button>
+    </form>
+    <form method="POST" action="{% url 'accountapp:approve_user' user.pk %}">
+      {% csrf_token %}
+      <button type="submit">저장</button>
+    </form>
+{% endif %}
+{% endblock %}

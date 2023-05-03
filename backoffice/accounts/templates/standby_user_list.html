@@ -1,16 +1,17 @@
 {% extends 'base.html' %} 
 {% block content %} 
 {% if user.is_authenticated %}
-  {% if not user.level == 'R' or 'W' %}
-    <h1>회원 리스트</h1>
+  {% if user.level == 'M' or user.level == 'A' %}
+  <h1>가입 대기 회원 리스트</h1>
     <table>
       <thead>
         <tr>
           <th>ID</th>
           <th>이메일</th>
+          <th>상태</th>
           <th>이름</th>
           <th>가입 일시</th>
-          <th>최근 로그인 일시</th>
+          <th>거절 일시</th>
           <th></th>
         </tr>
       </thead>
@@ -19,21 +20,27 @@
         <tr>
           <td>{{ user.id }}</td>
           <td>{{ user.email }}</td>
+          <td>{% if user.status == 'R' %} 거절 {% else %} 대기 {% endif %}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.date_joined }}</td>
-          <td>{{ user.last_login }}</td>
           <td>
-            <a href="{% url 'accountapp:user_detail' user.pk %}">상세</a>
+            {% if user.date_rejected %} {{user.date_rejected}} {% else %} -
+            {%endif%}
+          </td>
+          <td>
+            <a href="{% url 'accountapp:standby_user_detail' user.pk %}">상세</a>
           </td>
         </tr>
         {% empty %}
         <tr>
-          <td colspan="7">회원이 없습니다.</td>
+          <td colspan="7">가입 대기 중인 회원이 없습니다.</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   {% else %}
-{% endif %}
+  {% endif %}
+{% else %}
+<h1>[[ 로그인을 해야지 접근 가능합니다. ]]</h1>
 {% endif %}
 {% endblock %}

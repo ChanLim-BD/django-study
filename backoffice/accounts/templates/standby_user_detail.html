@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
 {% block content %}
+{% if user.is_authenticated %}
   <table>
     <thead>
       <tr>
@@ -51,4 +52,5 @@
       {% csrf_token %}
       <button type="submit">승인</button>
     </form>
+{% endif %}
 {% endblock %}

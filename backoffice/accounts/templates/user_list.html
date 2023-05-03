@@ -1,31 +1,84 @@
-{% extends 'base.html' %} {% block content %}
-<h1>가입 대기 회원 리스트</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>이메일</th>
-      <th>상태</th>
-      <th>이름</th>
-      <th>가입 일시</th>
-      <th>거절 일시</th>
-      <th>상세 정보</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for user in users %}
-    <tr>
-      <td>{{ user.id }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.status }}</td>
-      <td>{{ user.name }}</td>
-      <td>{{ user.date_joined }}</td>
-      <td>{{ user.date_rejected }}</td>
-      <td>
-        <a href="{% url 'accounts:standby_user_detail' user.pk %}">상세 정보</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% extends 'base.html' %} 
+{% block content %} 
+{% if user.is_authenticated %}
+  {% if user.status == 'W' %}
+  <h1>[[ 가입 대기 ]]</h1>
+  <h3>관리자의 승인이 필요합니다.</h3>
+  {% elif user.status == 'R' %}
+  <h1>[[ 가입 거절 ]]</h1>
+  <h3>죄송합니다.</h3>
+  {% else %}
+    {% if user.permission_list == True %}
+    {% if user.level == 'M' %}
+    <h1>회원 리스트</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>이메일</th>
+          <th>이름</th>
+          <th>가입 일시</th>
+          <th>최근 로그인 일시</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.date_joined }}</td>
+          <td>{{ user.last_login }}</td>
+          <td>
+            <a href="{% url 'accountapp:user_detail' user.pk %}">상세</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="7">회원이 없습니다.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h1>회원 리스트</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>이메일</th>
+          <th>이름</th>
+          <th>가입 일시</th>
+          <th>최근 로그인 일시</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+            {% if user.status != 'S' %}
+                <tr>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.date_joined }}</td>
+                  <td>{{ user.last_login }}</td>
+                  <td>
+                    <a href="{% url 'accountapp:user_detail' user.pk %}">상세</a>
+                  </td>
+                </tr>
+            {% endif %}
+        {% empty %}
+            <tr>
+              <td colspan="7">회원이 없습니다.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+  {% endif %}
+{% else %}
+<h1>[[ 로그인을 해야지 접근 가능합니다. ]]</h1>
+{% endif %}
 {% endblock %}
