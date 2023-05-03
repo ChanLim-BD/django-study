@@ -31,7 +31,7 @@ def check_email(request):
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('accountapp:login')
-    template_name = 'signup.html'
+    template_name = 'registration/signup.html'
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -59,20 +59,20 @@ class CustomLoginView(LoginView):
 
 class StandbyUserListView(ListView):
     model = CustomUser
-    template_name = 'standby_user_list.html'
+    template_name = 'standby/standby_user_list.html'
     queryset = CustomUser.objects.filter(status__in=['W', 'R'])
     context_object_name = 'users'
 
     
 class StandbyUserDetailView(DetailView):
     model = CustomUser
-    template_name = 'standby_user_detail.html'
+    template_name = 'standby/standby_user_detail.html'
     context_object_name = 'user'
     
 
 class UserListView(ListView):
     model = CustomUser
-    template_name = 'user_list.html'
+    template_name = 'user/user_list.html'
     context_object_name = 'users'
 
     def get_queryset(self):
@@ -86,7 +86,7 @@ class UserListView(ListView):
 
 class UserDetailView(DetailView):
     model = CustomUser
-    template_name = 'user_detail.html'
+    template_name = 'user/user_detail.html'
     context_object_name = 'user'
 
 
@@ -120,7 +120,7 @@ def update_permission(request, pk):
             context = {
                 'user': user,
             }
-            return render(request, 'update_permission.html', context)
+            return render(request, 'accountapp:update_permission', context)
     else:
         return HttpResponseForbidden()
 
@@ -180,7 +180,7 @@ def update_user_info(request, pk):
         context = {
             'user': user,
         }
-        return render(request, 'update_user_info.html', context)
+        return render(request, 'accountsapp:update_user_info', context)
 
 
 
